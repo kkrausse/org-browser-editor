@@ -1,0 +1,167 @@
+body {
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text color */
+    font-family: Arial, sans-serif; /* Standard font */
+    font-size: 16px;
+}
+[contenteditable] {
+    font-size: inherit;
+}
+button {
+    font-size: inherit;
+    cursor: pointer;
+    transition: background-color 0.5s;
+}
+.j
+
+input, textarea {
+    background-color: #333; /* Darker background for input fields */
+    color: inherit; /* White text color for input fields */
+}
+.dash-level-1 {
+    text-indent: -2ch;
+    padding-left: 2ch;
+}
+.dash-level-2 {
+    text-indent: -4ch;
+    padding-left: 4ch;
+}
+.dash-level-3 {
+    text-indent: -6ch;
+    padding-left: 6ch;
+}
+.dash-level-4 {
+    text-indent: -8ch;
+    padding-left: 8ch;
+}
+.p.empty-space {
+    font-family: monospace;
+}
+.indent-space {
+    font-family: monospace;
+    color: cyan;
+    font-weight: bold;
+}
+.bullet-dash {
+    font-family: monospace;
+}
+.hl-level-1 {
+    color: #3364f5;
+    /* margin-left: -1.1em; */
+}
+.hl-level-2 {
+    color: #41c0d1;
+    /* hides the bullet! */
+    /* text-indent: -1ch; */
+}
+.hl-level-3 {
+    color: green;
+}
+.pdrawer {
+    color: grey;
+    font-size: 0.6em;
+}
+.org-container {
+    margin-left: 0.75em;
+}
+.hl-hl {
+    /* margin-left: -.75em; */
+    height: 1.2em;
+    /* overflow-y: hidden; */
+}
+.hl-title {
+    font-weight: bold;
+    /* text-decoration: underline; */
+    /* vertical-align: top; */
+}
+.hl-dots {
+    /* background: blue; was: .hl-hl .hl-dots */
+    /* flattens all dots */
+    /* letter-spacing: -1ch; */
+    /* margin-right: 1ch; */
+    /* cursor: pointer; */
+    font-weight: bold;
+    color: grey;
+    font-family: monospace;
+}
+
+
+div.block {
+    margin-left: 0.25em;
+    padding-left: 0.25em;
+    border-left: 1px solid grey;
+    /* box-shadow: -2px 1em 0px 0px grey inset; */
+}
+
+mark {
+    background-color: lightblue;
+}
+
+/* new stff */
+.leading-space {
+    /* background-color: blue; */
+    font-family: monospace;
+    letter-spacing: -.1ch;
+}
+
+.indent-line {
+    padding-left: calc(var(--start-indent) * 1ch + var(--org-is-bullet) * 1ch);
+    text-indent: calc(var(--start-indent) * -1ch + var(--org-is-bullet) * -1ch);
+    /* border-left: 1px solid white; */
+    /* box-shadow: inset 0 0 5px blue; */
+}
+.indent-line .bullet {
+    text-indent: 0
+}
+
+.id-link {
+    cursor: pointer;
+}
+
+.property-drawer {
+    font-size: 0.7em;
+    opacity: 0.7;
+}
+.property-drawer-anchor {
+    cursor: pointer;
+}
+
+.el-inline {
+    display: inline;
+}
+.el-block {
+    display: block;
+    align-items: stretch;
+}
+.p {
+    position: relative
+}
+
+/* wraps lines with little indicator */
+.indent-text::before, .bullet-item::before {
+  content: "";
+  position: absolute;
+  height: calc(100% - .4em); /* Match the element's height */
+  top: 0.2em;
+  margin-left: calc(var(--start-indent, -1000) * 1ch - .6ch);
+  width: 0.2ch; /* Width of the "shadow" */
+  opacity: 0.3;
+  background-color: white; /* Shadow color */
+  z-index: -5; /* Place behind the content */
+}
+.id-link {
+    text-decoration: underline;
+    color: #2eafff;
+}
+
+.bullet {
+    opacity: 0.7;
+    cursor: text;
+    font-family: monospace;
+    margin-right: -1ch;
+    transform: scaleX(0.5);
+    transform-origin: left;
+    display: inline-block;
+    height: 100%;
+    font-weight: bold;
+}

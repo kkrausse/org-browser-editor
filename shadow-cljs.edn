@@ -1,0 +1,18 @@
+{:deps {:aliases [:cljs]}
+ :dev-http {8000 {:root      "public"
+                  ;; file server url from docker-compose hosting notes
+                  :proxy-url "http://localhost:8080"}}
+ :builds
+ {:app {:target           :browser
+        :output-dir       "public/js"
+        :asset-path       "/js"
+        :js-options       {:js-provider :shadow}
+        ;; :simple faster
+        :compiler-options {:optimizations :advanced}
+        :modules          {:main {:init-fn org-browser-editor.index/init}}
+        ;; don't think this is needed? but it not working
+        :devtools         {:watch-dir       "public"
+                           :reload-strategy "full"}
+        ;; :module-loader true
+        :release          {:output-dir "release/site/js"
+                           :asset-path "/js"}}}}
