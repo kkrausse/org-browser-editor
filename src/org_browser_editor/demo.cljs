@@ -1,17 +1,18 @@
-(ns org-browser-editor.index
+(ns org-browser-editor.demo
   (:require
    [reagent.core :as rg]
    ["react-dom/client" :as react-client]
    [org-browser-editor.slate-rich-org :as rich-org]
+   [org-browser-editor.util :as util]
    ))
 
 (defn main-page []
   [:<>
-   [:p "hello2!"]
-   [:div {:style {:border "2px solid black"}}
-    [rich-org/editor {:text "this is a test"
+   [:div {:style {:max-width "80ch"}}
+    [rich-org/editor {:text
+                      (util/slurp-resource "demo.org")
                       :on-evt (fn [x]
-                               ; (js/console.log "ed event")
+                               ;; nothing
                                 )}]]])
 
 (defonce rroot (react-client/createRoot (js/document.querySelector "#app")))

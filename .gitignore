@@ -1,7 +1,7 @@
 /node_modules
 .DS_Store
 .clj-kondo/*/
-js
+public/js
 .lsp/
 .nrepl-port
 .cpcache

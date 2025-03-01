@@ -9,10 +9,21 @@
         :js-options       {:js-provider :shadow}
         ;; :simple faster
         :compiler-options {:optimizations :advanced}
-        :modules          {:main {:init-fn org-browser-editor.index/init}}
+        :modules          {:main {:init-fn org-browser-editor.roam.webdav-notes/init
+                                  }}
         ;; don't think this is needed? but it not working
         :devtools         {:watch-dir       "public"
                            :reload-strategy "full"}
         ;; :module-loader true
-        :release          {:output-dir "release/site/js"
-                           :asset-path "/js"}}}}
+        :release          {:output-dir "release/app/js"
+                           :asset-path "/js"}}
+  :demo {:target           :browser
+         :output-dir       "public/js"
+         :asset-path       "/js"
+         :js-options       {:js-provider :shadow}
+         :compiler-options {:optimizations :advanced}
+         :modules          {:main {:init-fn org-browser-editor.demo/init}}
+         :devtools         {:watch-dir       "public"
+                            :reload-strategy "full"}
+         :release          {:output-dir "release/demo/js"
+                            :asset-path "/js"}}}}

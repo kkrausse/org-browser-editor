@@ -1,0 +1,15 @@
+* org browser editor
+
+A richtext org editor for the browser. Supposed to feel like you're editing in emacs written in ClojureScript with react.
+
+There are two main parts of the repository
+- a basic org editor with a demo
+- an application built on it that has file navigation and node insert like org roam that uses a webdav server to get/write files.
+
+** build demo
+
+#+begin_src sh
+cp public/main.css release/demo/main.css
+cp public/public.html release/demo/public.html
+clj -M:cljs:shadow release demo
+#+end_src
