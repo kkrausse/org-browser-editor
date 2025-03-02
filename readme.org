@@ -1,6 +1,6 @@
 * org browser editor
 
-A richtext org editor for the browser. Supposed to feel like you're editing in emacs written in ClojureScript with react.
+A richtext org editor for the browser. Supposed to feel like you're editing in emacs. Written in ClojureScript with react.
 
 demo to edit this readme at https://kkrausse.github.io/org-browser-editor/
 
@@ -8,17 +8,18 @@ There are two main parts of the repository
 - a basic org editor with a demo
 - an application built on it that has file navigation and node insert like org roam that uses a webdav server to get/write files.
 
-** build demo
+** development
+*** build demo
 :PROPERTIES:
 :ID:       c839d3f9-de85-4bd2-a176-aa69129d3893
 :END:
 
 #+begin_src sh
 cp public/main.css docs/main.css
-cp public/public.html docs/public.html
+cp public/index.html docs/public.html
 clj -M:cljs:shadow release demo
 #+end_src
 
-** build app
+*** build app
 
 TODO
