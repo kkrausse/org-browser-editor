@@ -25,5 +25,5 @@
          :modules          {:main {:init-fn org-browser-editor.demo/init}}
          :devtools         {:watch-dir       "public"
                             :reload-strategy "full"}
-         :release          {:output-dir "release/demo/js"
+         :release          {:output-dir "docs/js"
                             :asset-path "/js"}}}}

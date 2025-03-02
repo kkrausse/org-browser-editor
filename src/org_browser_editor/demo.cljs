@@ -10,7 +10,7 @@
   [:<>
    [:div {:style {:max-width "80ch"}}
     [rich-org/editor {:text
-                      (util/slurp-resource "demo.org")
+                      (util/slurpped-str "readme.org")
                       :on-evt (fn [x]
                                ;; nothing
                                 )}]]])

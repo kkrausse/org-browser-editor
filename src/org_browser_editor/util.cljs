@@ -2,7 +2,7 @@
   (:require
    ["slate" :as slate]
    [promesa.core :as p])
-  (:require-macros [org-browser-editor.util :refer [ed-wo-norm slurp-resource]]))
+  (:require-macros [org-browser-editor.util :refer [ed-wo-norm]]))
 
 (def ^:dynamic *debug* {})
 

@@ -136,6 +136,15 @@ mark {
     position: relative
 }
 
+.org-typed-block {
+    font-family: monospace;
+}
+
+.org-typed-block-content {
+    font-family: monospace;
+    opacity: 0.8;
+}
+
 /* wraps lines with little indicator */
 .indent-text::before, .bullet-item::before {
   content: "";

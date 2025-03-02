@@ -1,18 +1,17 @@
-{:paths   ["src" "resources"]
+{:paths   ["src"]
  :deps    {org.clojure/clojure {:mvn/version "1.12.0-rc2"}
            meander/epsilon     {:mvn/version "0.0.650"}
            funcool/promesa     {:git/url "https://github.com/funcool/promesa"
-                                :sha     "147c15974484a4f3634e6ad095217806dbb58ee4"}
-           lambdaisland/fetch  {:mvn/version "1.5.83"}}
- :aliases {:dev  {:extra-deps {}}
-           :cljs {:extra-deps {org.clojure/clojurescript {:mvn/version "1.11.132"}
-                               thheller/shadow-cljs      {:mvn/version "2.28.14"}
-                               cider/cider-nrepl         {:mvn/version "0.26.0"}
-                               reagent/reagent           {:mvn/version "1.3.0"}}
-                  :main-opts  ["-m"
-                               "nrepl.cmdline"
-                               "--middleware"
-                               "[shadow.cljs.devtools.server.nrepl/middleware,cider.nrepl/cider-middleware]"
-                               "--interactive"
-                               "--color"]}
+                                :sha     "147c15974484a4f3634e6ad095217806dbb58ee4"}}
+ :aliases {:dev    {:extra-deps {cider/cider-nrepl {:mvn/version "0.26.0"}}}
+           :cljs   {:extra-deps {org.clojure/clojurescript {:mvn/version "1.11.132"}
+                                 thheller/shadow-cljs      {:mvn/version "2.28.14"}
+                                 lambdaisland/fetch        {:mvn/version "1.5.83"}
+                                 reagent/reagent           {:mvn/version "1.3.0"}}
+                    :main-opts  ["-m"
+                                 "nrepl.cmdline"
+                                 "--middleware"
+                                 "[shadow.cljs.devtools.server.nrepl/middleware,cider.nrepl/cider-middleware]"
+                                 "--interactive"
+                                 "--color"]}
            :shadow {:main-opts ["-m" "shadow.cljs.devtools.cli"]}}}

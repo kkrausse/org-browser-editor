@@ -843,62 +843,78 @@
 
 (defn ed-macro-parse-1 [lines]
   ;; NOTE passing in no text parse
-  (me/find lines
-    [[:p {:path ?p :el-id !eid} (me/re #"\s*:PROPERTIES:\s*")] .
-     [:p {:path !pn :el-id !eid}
-      & (me/app
-         simple->text
-         (me/re #"\s*:(.+):(.*)" !ps))] ...
-     [:p {:path ?pe :el-id !eid} (me/re #"\s*:END:\s*" ?ends)] .
-     & ?post]
-    [{:t :property-drawer
-      :props (->> !ps (map rest) (org-parse/parse-props))
-      :paths (into [?p ?pe] !pn)
+  (me/find
+   lines
+   [[:p {:path ?p :el-id !eid} (me/re #"\s*:PROPERTIES:\s*")] .
+    [:p {:path !pn :el-id !eid}
+     & (me/app
+        simple->text
+        (me/re #"\s*:(.+):(.*)" !ps))] ...
+    [:p {:path ?pe :el-id !eid} (me/re #"\s*:END:\s*" ?ends)] .
+    & ?post]
+   [{:t :property-drawer
+     :props (->> !ps (map rest) (org-parse/parse-props))
+     :paths (into [?p ?pe] !pn)
+     :el-ids !eid}
+    ?post]
+
+
+   [[:p {:path ?p :el-id !eid} (me/re #"#\+begin_(\S+)(.*)" [?raw ?type ?args])] .
+    [:p {:path !pn :el-id !ceid}
+     & _] ...
+    [:p {:path ?pe :el-id !eid} (me/re #"#\+end_(\S+)(.*)" [?raw-end ?type _])] .
+    & ?post]
+   [[{:t :org-typed-block
+      :css-classes [(str ?type "-org-block")]
+      :paths [?p ?pe]
       :el-ids !eid}
-     ?post]
+     {:t :org-typed-block-content
+      :css-classes [(str ?type "-org-block")]
+      :paths !pn
+      :el-ids !ceid}]
+    ?post]
 
-
-    (me/and
-     [[:p {:path ?p :el-id !eid} .
-       [:leading-space _ (me/app count !indent)] ...
-       [:bullet _ !txt] ...
-       & [(me/not (me/or [:leading-space & _]
-                         [:bullet & _]))
-          & _]]
-      & ?post]
-     (me/guard (some? (first !txt))))
-    [{:t :bullet-item
-      :paths [?p]
-      :el-ids !eid
-      :indent-level (or (first !indent) 0)}
-     ?post]
-
-    [[:p {:path ?p :el-id !eid}
-      [:leading-space _ (me/app count ?indent)] & _]
+   (me/and
+    [[:p {:path ?p :el-id !eid} .
+      [:leading-space _ (me/app count !indent)] ...
+      [:bullet _ !txt] ...
+      & [(me/not (me/or [:leading-space & _]
+                        [:bullet & _]))
+         & _]]
      & ?post]
-    [{:t :indent-text
-      :paths [?p]
-      :el-ids !eid
-      :indent-level ?indent}
-     ?post]
+    (me/guard (some? (first !txt))))
+   [{:t :bullet-item
+     :paths [?p]
+     :el-ids !eid
+     :indent-level (or (first !indent) 0)}
+    ?post]
 
-    [[:p {:path ?p }
-      [:hl-hl {:el-id !eid}
-       [:hl-dots _ ?dots]
-       [:hl-title _ & (me/app simple->text
-                              ?title)]]]
-     & ?post]
-    [{:t :headline
-      :el-ids !eid
-      :level (-> ?dots count (dec))}
-     ?post]
+   [[:p {:path ?p :el-id !eid}
+     [:leading-space _ (me/app count ?indent)] & _]
+    & ?post]
+   [{:t :indent-text
+     :paths [?p]
+     :el-ids !eid
+     :indent-level ?indent}
+    ?post]
 
-    ;; base case
-    [[:p {:path ?p :el-id !eid} & _] & ?post]
-    [{:paths [?p]
-      :el-ids !eid}
-     ?post]
-    ))
+   [[:p {:path ?p }
+     [:hl-hl {:el-id !eid}
+      [:hl-dots _ ?dots]
+      [:hl-title _ & (me/app simple->text
+                             ?title)]]]
+    & ?post]
+   [{:t :headline
+     :el-ids !eid
+     :level (-> ?dots count (dec))}
+    ?post]
+
+   ;; base case
+   [[:p {:path ?p :el-id !eid} & _] & ?post]
+   [{:paths [?p]
+     :el-ids !eid}
+    ?post]
+   ))
 
 ;; I think we want the parse blocks to be in react state space
 ;; so can modify it
@@ -910,8 +926,10 @@
          to-parse line-seq]
     (if (seq to-parse)
       (let [[p ps] (pf to-parse)]
-        (recur (or (some->> p (conj parsed))
-                   parsed)
+        (recur (or (if (vector? p)
+                     (into parsed p)
+                     (some->> p (conj parsed)))
+                parsed)
                ps))
       parsed)))
 
@@ -1032,10 +1050,12 @@
           {:as fp :keys [el-ids]} @parsec
           is-anchor?              (= el-id (first el-ids))
           fp                      (assoc fp :is-anchor? is-anchor?)
-          pclasses                (->> (let [{:keys [t]} fp]
+          pclasses                (->> (let [{:keys [t css-classes]} fp]
                                          (when t
-                                           [(name t)
-                                            (when is-anchor? (str (name t) "-anchor"))]))
+                                           (concat
+                                            [(name t)
+                                             (when is-anchor? (str (name t) "-anchor"))]
+                                            css-classes)))
                                        flatten
                                        (filter some?))
           collapsedc             (rg/cursor statec [:collapsed?])

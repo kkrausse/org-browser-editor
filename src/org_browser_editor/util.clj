@@ -26,8 +26,8 @@
     [!x# ...] [(me/cata !x#) ...]
     ?x# ?x#))
 
-(defmacro slurp-resource [f]
-  (slurp (io/resource f)))
+(defmacro slurpped-str [f]
+  (slurp f))
 
 (defmacro klog [msg & vars]
   `(cljs.pprint/pprint
