@@ -5,8 +5,13 @@ A richtext org editor for the browser. Supposed to feel like you're editing in e
 demo to edit this readme at https://kkrausse.github.io/org-browser-editor/
 
 There are two main parts of the repository
-- a basic org editor with a demo
-- an application built on it that has file navigation and node insert like org roam that uses a webdav server to get/write files.
+- a basic org editor with callbacks that can be embedded in apps (demo above)
+- an app built on it that has file navigation and node insert like org roam that uses a webdav server to get/write files. This is very bespoke for my own use case at this point
+
+** motivation
+There wasn't a good open source rich org editor on the market that would give a similar exerience to editing in emacs, so this attempts to be that.
+
+Also, org files are better than markdown as an underlying "protocol" for a note taking app because there's better linking functionality. So a side goal was to build a notes app out of it.
 
 ** development
 *** build demo
